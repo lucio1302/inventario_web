@@ -24,27 +24,45 @@ function aggiornaTabella() {
     let tbody = document.getElementById('articoli');
     tbody.innerHTML = '';
     inventario.forEach((articolo, index) => {
-        let row = tbody.insertRow();
-        row.insertCell(0).innerText = articolo;
-        row.insertCell(1).innerText = ''; // Placeholder per colonna acquisto
-        row.insertCell(2).innerText = ''; // Placeholder per colonna vendita
-        row.insertCell(3).innerText = ''; // Placeholder per colonna listino
+        if (articolo && articolo.nome) { // Verifica che l'articolo sia valido
+            let row = tbody.insertRow();
+            row.insertCell(0).innerText = articolo.nome || '';
+            row.insertCell(1).innerText = articolo.acquisto || '';
+            row.insertCell(2).innerText = articolo.vendita || '';
+            row.insertCell(3).innerText = articolo.listino || '';
+        }
     });
 }
 
 function aggiungiArticolo() {
     let nomeArticolo = document.getElementById('nome-articolo').value;
-    if (nomeArticolo) {
-        inventario.push(nomeArticolo);
+    let prezzoAcquisto = document.getElementById('prezzo-acquisto').value;
+    let prezzoVendita = document.getElementById('prezzo-vendita').value;
+    let prezzoListino = document.getElementById('prezzo-listino').value;
+
+    if (nomeArticolo && prezzoAcquisto && prezzoVendita && prezzoListino) {
+        let nuovoArticolo = {
+            nome: nomeArticolo,
+            acquisto: parseFloat(prezzoAcquisto).toFixed(2),
+            vendita: parseFloat(prezzoVendita).toFixed(2),
+            listino: parseFloat(prezzoListino).toFixed(2)
+        };
+        inventario.push(nuovoArticolo);
         aggiornaTabella();
         salvaInventario();
+        
         document.getElementById('nome-articolo').value = '';
+        document.getElementById('prezzo-acquisto').value = '';
+        document.getElementById('prezzo-vendita').value = '';
+        document.getElementById('prezzo-listino').value = '';
+    } else {
+        alert("Per favore, compila tutti i campi.");
     }
 }
 
 function rimuoviArticolo() {
     let nomeArticolo = document.getElementById('nome-articolo-rimuovi').value;
-    let index = inventario.indexOf(nomeArticolo);
+    let index = inventario.findIndex(articolo => articolo.nome === nomeArticolo);
     if (index !== -1) {
         inventario.splice(index, 1);
         aggiornaTabella();
@@ -57,7 +75,7 @@ function rimuoviArticolo() {
 
 function cercaArticolo() {
     let nomeArticolo = document.getElementById('nome-articolo-ricerca').value;
-    let count = inventario.filter(articolo => articolo === nomeArticolo).length;
+    let count = inventario.filter(articolo => articolo.nome === nomeArticolo).length;
     if (count > 0) {
         alert(`L'articolo che stai cercando è presente ${count} volte nell'inventario.`);
     } else {
