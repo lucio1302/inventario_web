@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Inventario</h1>
+        <div id="inventario">
+            <h2>Gli articoli disponibili sono:</h2>
+            <table id="tabella-inventario">
+                <thead>
+                    <tr>
+                        <th>Nome Articolo</th>
+                        <th>Acquisto</th>
+                        <th>Vendita</th>
+                        <th>Listino</th>
+                    </tr>
+                </thead>
+                <tbody id="articoli">
+                    <!-- Gli articoli saranno inseriti qui -->
+                </tbody>
+            </table>
+        </div>
+        <div id="azioni">
+            <h2>Vuoi aggiungere, rimuovere o cercare un articolo?</h2>
+            <input type="text" id="azione" placeholder="Azione (aggiungere, rimuovere, cercare)">
+            <button onclick="eseguiAzione()">Esegui</button>
+        </div>
+        <div id="input-articoli" style="display: none;">
+            <h2>Inserisci il nome del prodotto:</h2>
+            <input type="text" id="nome-articolo" placeholder="Nome articolo">
+            <button onclick="aggiungiArticolo()">Aggiungi</button>
+        </div>
+        <div id="input-rimozione" style="display: none;">
+            <h2>Inserisci il nome dell'articolo da rimuovere:</h2>
+            <input type="text" id="nome-articolo-rimuovi" placeholder="Nome articolo">
+            <button onclick="rimuoviArticolo()">Rimuovi</button>
+        </div>
+        <div id="input-ricerca" style="display: none;">
+            <h2>Inserisci il nome dell'articolo da cercare:</h2>
+            <input type="text" id="nome-articolo-ricerca" placeholder="Nome articolo">
+            <button onclick="cercaArticolo()">Cerca</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
